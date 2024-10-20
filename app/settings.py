@@ -10,7 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+from decouple import config
 from pathlib import Path
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'rest_framework',
+    'djoser',
+    'drf_spectacular',
     'core'
 ]
 
@@ -131,3 +135,41 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # settings.py
 
 AUTH_USER_MODEL = 'core.CustomUser'
+
+
+DJOSER = {
+    'SERIALIZERS': {
+        'user_create': 'core.serializers.CustomUserCreateSerializer',
+        'user': 'core.serializers.CustomUserSerializer',
+    },
+    'USER_ID_FIELD': 'email',
+    'LOGIN_FIELD': 'email',
+    'ACTIVATION_URL': '#/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+}
+
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('JWT',),
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'WorldRank',
+    'DESCRIPTION': 'This is the API documentation for my Django project.',
+    'VERSION': '0.1.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = config('SMTP_SERVER', '127.0.0.1')
+EMAIL_PORT = config('SMTP_PORT', 25)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', 'joe@taxi.com')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', 'joe_pass')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool, default=False)

@@ -1,0 +1,8 @@
+services:
+  smtp4dev:
+    image: rnwood/smtp4dev
+    ports:
+      - "2500:2500"
+      - "25:25"
+      - "8888:80"
+    restart: always
