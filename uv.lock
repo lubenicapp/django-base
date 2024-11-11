@@ -281,7 +281,7 @@ dependencies = [
     { name = "ruff" },
 ]
 
-[package.dev-dependencies]
+[package.dependency-groups]
 dev = [
     { name = "behave" },
     { name = "blue" },
@@ -300,11 +300,11 @@ requires-dist = [
     { name = "drf-nested-routers", specifier = ">=0.94.1" },
     { name = "drf-spectacular", specifier = ">=0.27.2" },
     { name = "loguru", specifier = ">=0.7.2" },
-    { name = "python-decouple" },
+    { name = "python-decouple", specifier = ">=3.8" },
     { name = "ruff", specifier = ">=0.7.0" },
 ]
 
-[package.metadata.requires-dev]
+[package.metadata.dependency-groups]
 dev = [
     { name = "behave", specifier = ">=1.2.6" },
     { name = "blue", specifier = ">=0.9.1" },
